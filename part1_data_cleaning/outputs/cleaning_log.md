@@ -147,3 +147,29 @@ proved all slash-format dates were actually US format.
 - Clean: 643 rows
 - Warning: 218 rows
 - Invalid: 51 rows
+
+
+## Task 8: Create Pivot Summary Report
+
+### Pivots Created
+- Sales and profit by region (pivot_sales_profit_region) — sorted descending by calculated_sales
+- Sales and profit by category and sub-category (pivot_sales_profit_category)
+- Order count by ship mode (pivot_order_count_ship_mode)
+- Average profit margin by customer segment(pivot_profit_margin_segment) 
+  — uses cleaned profit margin (calculated_profit / calculated_sales), not raw profit/sales
+- Refunded/cancelled/failed orders by region (pivot_refund_cancel_failed_region) 
+  — includes payment_status filter
+- Monthly sales trend (pivot_monthly_sales_trend) — nested by order_year and order_month
+
+### Method Used
+- Copied cleaned data from cleaned_orders.xlsx (Table1 sheet) into a new source_data sheet inside pivot_summary.xlsx
+- Built each pivot table from this source_data using Excel's native PivotTable feature
+- Sum aggregation used for sales/profit totals; Average aggregation used for profit margin by segment, since margins should not be summed across rows
+- All values formatted to 2 decimal places using Value Field Settings
+
+### Sorting and Filtering Applied
+- pivot_sales_profit_region sorted descending by calculated_sales
+- pivot_refund_cancel_failed_region includes a payment_status filter field
+
+### Assumptions Made
+- Pivot calculations use cleaned/calculated values (calculated_sales, calculated_profit, profit_margin) rather than original raw sales/profit columns, to reflect corrected data
