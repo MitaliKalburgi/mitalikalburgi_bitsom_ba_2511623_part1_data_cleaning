@@ -173,3 +173,15 @@ proved all slash-format dates were actually US format.
 
 ### Assumptions Made
 - Pivot calculations use cleaned/calculated values (calculated_sales, calculated_profit, profit_margin) rather than original raw sales/profit columns, to reflect corrected data
+
+## Overall Limitations
+
+- Date locale ambiguity: For slash-format dates where both day and month values were 12 or below (e.g. 06/08/2024), it was not possible to determine with complete certainty whether the format was MM/DD or DD/MM. The assumption of US format (MM/DD) was made based on evidence from unambiguous dates in the same column, but this could be incorrect for some individual rows.
+
+- Discount threshold: The business rules stated "discount above allowed range" without specifying an exact cutoff. A threshold of 0.5 was chosen based on data distribution analysis and real-world retail norms. A different threshold could produce different flagging results.
+
+- Duplicate order_id conflicts: For the 24 rows with conflicting duplicate order_ids, it was not possible to determine which record was correct without access to the original source system or additional business context. These rows were flagged rather than resolved.
+
+- Missing region/ship_mode filled with Unknown: While this follows the given business rules, rows marked Unknown will affect regional and shipping mode analysis summaries and may slightly skew results.
+
+- Negative discounts corrected using absolute value: These were assumed to be sign-entry errors. However, without business confirmation, it is possible these values represented something other than a simple sign mistake (e.g. a surcharge or price adjustment).
